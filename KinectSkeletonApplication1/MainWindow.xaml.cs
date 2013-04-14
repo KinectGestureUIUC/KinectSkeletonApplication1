@@ -147,12 +147,13 @@ namespace KinectSkeletonApplication1
             //second == Right Hand
 
             checkABCD(first, second, head);
-
-           /* if (second.Position.Y > head.Position.Y && first.Position.Y > head.Position.Y) textbox.Text = "Both hands up!";
+            checkEFG(first, second, head);
+/*
+            if (second.Position.Y > head.Position.Y && first.Position.Y > head.Position.Y) textbox.Text = "Both hands up!";
             else if (first.Position.Y > head.Position.Y) textbox.Text = "Left hands up!";
             else if (second.Position.Y > head.Position.Y) textbox.Text = "Right hands up!";
             else textbox.Text = "No hands up!";
-            */
+ */
 
 /*
             if ((first.Position.Y < second.Position.Y+30 && first.Position.Y > second.Position.Y - 30))
@@ -191,10 +192,12 @@ namespace KinectSkeletonApplication1
 
             //Get the angle between from the head to hand
             double angle = Math.Atan((double)length / (double)height);
+            righthandanglebox.Text = "Right: " + angle;
 
             //If the angle is more than 40
-            if (!(angle > 0 && angle < 30))
+            if (!(angle > 0 && angle < 0.30))
             {
+                textbox.Text = "Nothing!";
                 return;
             }
 
@@ -214,61 +217,122 @@ namespace KinectSkeletonApplication1
             //If the left hand is on the right side of the body, return that the letter is not A
             if (length < 0) return;
 
+            double oangle;
             //Get the angle between from the head to hand
             if(height != 0)
             {
-            angle = Math.Atan((double)length / (double)height);
+             oangle = Math.Atan((double)length / (double)height);
             }
             else
             {
-            angle = -1;
+            oangle = -1;
             }
 
+            lefthandanglebox.Text = "Left: " + oangle;
+
             //If angle is between 0 and 40, we have a space/rest
-            if (angle >= 0 && angle < 30)
+            if (oangle >= 0 && oangle < 0.30)
             {
                 textbox.Text = "Space/Rest";
             }
-            else if (angle >= 30 && angle < 65)
+            else if (oangle >= 0.30 && oangle < 0.8)
             {
                 textbox.Text = "A";
             }
+            else if (oangle >= 0.8 && oangle < 1.4)
+            {
+                textbox.Text = "B";
+            }
+            else if ((oangle >= 1.4) || (oangle <= -1.2))
+            {
+                textbox.Text = "C";
+            }
             else
             {
-                //If the left hand is near the same height as the head, it's a B
-                if (left.Position.Y > head.Position.Y - 25 && left.Position.Y < head.Position.Y + 20)
-                {
-                    textbox.Text = "B";
-                }
-                 //Otherwise get the new angles
-                else
-                {
-                    height = left.Position.Y - head.Position.Y;
-                    length = head.Position.X - left.Position.X;
-
-                    angle = Math.Atan((double)length / (double)height);
-
-                    if (angle >= 30 && angle < 60)
-                    {
-                        textbox.Text = "C";
-                    }
-                    else
-                    {
-                        textbox.Text = "D";
-                    }
-
-                }
-
-
-
-
-
+                textbox.Text = "D";
             }
-
 
 
 
            
+        }
+
+        private void checkEFG(Joint right, Joint left, Joint head)
+        {
+            //Height of the triangle
+            float height = head.Position.Y - left.Position.Y;
+
+            //Length of the triangle
+            float length = head.Position.X - left.Position.X;
+
+            //Hypotenuse length
+            float hypotenuse = (float)Math.Sqrt(Math.Pow(height, 2) + Math.Pow(length, 2));
+
+            //If the right hand is on the left side of the body, return that the letter is not A
+            if (length < 0) return;
+
+            //Get the angle between from the head to hand
+            double angle = Math.Atan((double)length / (double)height);
+            lefthandanglebox.Text = "Right: " + angle;
+
+            //If the angle is more than 40
+            if (!(angle > 0 && angle < 0.30))
+            {
+                textbox.Text = "Nothing!";
+                return;
+            }
+
+
+            //See where the left hand is at
+
+
+            //Height of the triangle
+            height = head.Position.Y - left.Position.Y;
+
+            //Length of the triangle
+            length = head.Position.X - left.Position.X;
+
+            //Hypotenuse length
+            hypotenuse = (float)Math.Sqrt(Math.Pow(height, 2) + Math.Pow(length, 2));
+
+            //If the left hand is on the right side of the body, return that the letter is not A
+            if (length < 0) return;
+
+            double oangle;
+            //Get the angle between from the head to hand
+            if (height != 0)
+            {
+                oangle = Math.Atan((double)length / (double)height);
+            }
+            else
+            {
+                oangle = -1;
+            }
+
+            lefthandanglebox.Text = "Left: " + oangle;
+
+            //If angle is between 0 and 40, we have a space/rest
+            if (oangle >= 0 && oangle < 0.30)
+            {
+                textbox.Text = "Space/Rest";
+            }
+            else if (oangle >= 0.30 && oangle < 0.8)
+            {
+                textbox.Text = "A";
+            }
+            else if (oangle >= 0.8 && oangle < 1.4)
+            {
+                textbox.Text = "B";
+            }
+            else if ((oangle >= 1.4) || (oangle <= -1.2))
+            {
+                textbox.Text = "C";
+            }
+            else
+            {
+                textbox.Text = "D";
+            }
+
         }
     }
 }

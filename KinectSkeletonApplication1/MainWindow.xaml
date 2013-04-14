@@ -8,8 +8,9 @@
             <Ellipse Fill="Red" Height="10" Width="10" Name="leftHand" Stroke="White" Canvas.Left="0" Canvas.Top="0" IsEnabled="False"/>
             <Ellipse Fill="Red" Height="10" Width="10" Name="rightHand" Stroke="White" Canvas.Left="0" Canvas.Top="0" IsEnabled="False"/>
             <Ellipse Fill="Red" Height="10" Width="10" Name="head" Stroke="White" Canvas.Left="0" Canvas.Top="0" IsEnabled="False"/>
-            <TextBlock Text ="Hello!" FontSize ="48" Height="72" Width="355" Name="textbox" Canvas.Left="5" Canvas.Top="0" />
-            <TextBlock FontSize="40" Width="200"/>
+            <TextBlock Text ="Hello!" FontSize ="60" Height="72" Width="355" Name="textbox" Canvas.Left="5" Canvas.Top="0" />
+            <TextBlock Name="righthandanglebox" FontSize="60" Width="250" Canvas.Left="5" Canvas.Top="78" />
+            <TextBlock Name="lefthandanglebox" FontSize="60" Width="250" Canvas.Left="5" Canvas.Top="160" />
         </Canvas>
     </Grid>
 </Window>
