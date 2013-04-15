@@ -69,7 +69,7 @@ namespace KinectSkeletonApplication1
                     SetEllipsePosition(rightHand, currentSkeleton.Joints[JointType.HandRight]);
                     */
 
-                    inRange(currentSkeleton.Joints[JointType.HandLeft], currentSkeleton.Joints[JointType.HandRight], currentSkeleton.Joints[JointType.Head]);
+                    ourFunction(currentSkeleton.Joints[JointType.HandLeft], currentSkeleton.Joints[JointType.HandRight], currentSkeleton.Joints[JointType.Head]);
 
                 }
             }
@@ -141,15 +141,13 @@ namespace KinectSkeletonApplication1
             }
         }
 
-        private void inRange(Joint first, Joint second, Joint head)
+        private void ourFunction(Joint first, Joint second, Joint head)
         {
             //first == Left Hand
             //second == Right Hand
 
-            checkABCD(first, second, head);
-            //checkFMRYJ(first, second, head);
-            //checkELQUnums(first, second, head);
-            //checkKPT(first, second, head);
+            writeProperLetterOrNumber(first, second, head);
+
             /*
                         if (second.Position.Y > head.Position.Y && first.Position.Y > head.Position.Y) textbox.Text = "Both hands up!";
                         else if (first.Position.Y > head.Position.Y) textbox.Text = "Left hands up!";
@@ -160,30 +158,21 @@ namespace KinectSkeletonApplication1
 
         }
 
-        private void checkABCD(Joint left, Joint right, Joint head)
+        private void writeProperLetterOrNumber(Joint left, Joint right, Joint head)
         {
             //Height of the triangle
             float height = head.Position.Y - right.Position.Y;
-            heightbox.Text = "Height: " + height;
+          
             //Length of the triangle
             float length = right.Position.X - head.Position.X;
-            lengthbox.Text = "Length: " + length;
 
-            //Hypotenuse length
-            float hypotenuse = (float)Math.Sqrt(Math.Pow(height, 2) + Math.Pow(length, 2));
-
-
-
-            //Get the angle between from the head to hand
+            //Get the angle from the head to hand
             double angle = Math.Atan((double)length / (double)height);
-            righthandanglebox.Text = "Right: " + angle;
+          
 
             //If the angle is more than 40
             if (angle > 0 && angle < 0.40)
             {
-
-                //See where the left hand is at
-
 
                 //Height of the triangle
                 height = head.Position.Y - left.Position.Y;
@@ -205,7 +194,7 @@ namespace KinectSkeletonApplication1
                     oangle = -1;
                 }
 
-                lefthandanglebox.Text = "Left: " + oangle;
+               
 
 
                 //If angle is between 0 and 40, we have a space/rest
@@ -216,19 +205,31 @@ namespace KinectSkeletonApplication1
                 }
                 else if (oangle >= 0.40 && oangle < 0.8)
                 {
-                    textbox.Text = "A";
+                    if (letters)
+                        textbox.Text = "A";
+                    else
+                        textbox.Text = "1";
                 }
                 else if (oangle >= 0.8 && oangle < 1.4)
                 {
-                    textbox.Text = "B";
+                    if (letters)
+                        textbox.Text = "B";
+                    else
+                        textbox.Text = "2";
                 }
                 else if ((oangle >= 1.4) || (oangle <= -1.2))
                 {
-                    textbox.Text = "C";
+                    if (letters)
+                        textbox.Text = "C";
+                    else
+                        textbox.Text = "3";
                 }
                 else
                 {
-                    textbox.Text = "D";
+                    if (letters)
+                        textbox.Text = "D";
+                    else
+                        textbox.Text = "4";
                 }
 
             }//End if statement
@@ -257,30 +258,45 @@ namespace KinectSkeletonApplication1
                     oangle = -1;
                 }
 
-                lefthandanglebox.Text = "Left: " + oangle;
+               
 
 
                 //If angle is between 0 and 40, we have a space/rest
                 if (oangle >= 0 && oangle < 0.40)
                 {
-                    textbox.Text = "G";
+                    if (letters)
+                        textbox.Text = "G";
+                    else
+                        textbox.Text = "7";
 
                 }
                 else if (oangle >= 0.40 && oangle < 0.8)
                 {
-                    textbox.Text = "N";
+                    if (letters)
+                        textbox.Text = "N";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else if (oangle >= 0.8 && oangle < 1.4)
                 {
+                    if(letters)
                     textbox.Text = "S";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else if ((oangle >= 1.4) || (oangle <= -1.2))
                 {
+                    if(letters)
                     textbox.Text = "Cancel";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else
                 {
+                    if(letters)
                     textbox.Text = "V";
+                    else
+                        textbox.Text = "N/A";
                 }
 
             }
@@ -309,31 +325,44 @@ namespace KinectSkeletonApplication1
                     oangle = -1;
                 }
 
-                lefthandanglebox.Text = "Left: " + oangle;
+              
 
 
                 //If angle is between 0 and 40, we have a space/rest
                 if (oangle >= 0 && oangle < 0.40)
                 {
+                    if(letters)
                     textbox.Text = "F";
+                    else
+                        textbox.Text = "6";
 
                 }
                 else if (oangle >= 0.40 && oangle < 0.8)
                 {
+                    if(letters)
                     textbox.Text = "M";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else if (oangle >= 0.8 && oangle < 1.4)
                 {
+                    if(letters)
                     textbox.Text = "R";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else if ((oangle >= 1.4) || (oangle <= -1.2))
                 {
+                    if(letters)
                     textbox.Text = "Y";
+                    else
+                        textbox.Text = "N/A";
                  
                 }
                 else
-                {
+                {     
                     textbox.Text = "J";
+                    numeralonoff.Fill = Brushes.Red;
                     letters = true;
                 }
             }
@@ -362,30 +391,43 @@ namespace KinectSkeletonApplication1
                     oangle = -1;
                 }
 
-                lefthandanglebox.Text = "Left: " + oangle;
+              
 
 
                 //If angle is between 0 and 40, we have a space/rest
                 if (oangle >= 0 && oangle < 0.40)
                 {
+                    if(letters)
                     textbox.Text = "E";
+                    else
+                        textbox.Text = "5";
 
                 }
                 else if (oangle >= 0.40 && oangle < 0.8)
                 {
+                    if(letters)
                     textbox.Text = "L";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else if (oangle >= 0.8 && oangle < 1.4)
                 {
+                    if(letters)
                     textbox.Text = "Q";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else if ((oangle >= 1.4) || (oangle <= -1.2))
                 {
+                    if(letters)
                     textbox.Text = "U";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else
                 {
                     textbox.Text = "Numerals";
+                    numeralonoff.Fill = Brushes.Green;
                     letters = false;
                 }
 
@@ -417,9 +459,6 @@ namespace KinectSkeletonApplication1
                     oangle = -1;
                 }
 
-                lefthandanglebox.Text = "Left: " + oangle;
-
-
                 //If angle is between 0 and 40, we have a space/rest
                 if (oangle >= 0 && oangle < 0.40)
                 {
@@ -428,15 +467,24 @@ namespace KinectSkeletonApplication1
                 }
                 else if (oangle >= 0.40 && oangle < 0.8)
                 {
+                    if(letters)
                     textbox.Text = "K";
+                    else
+                        textbox.Text = "0";
                 }
                 else if (oangle >= 0.8 && oangle < 1.4)
                 {
+                    if(letters)
                     textbox.Text = "P";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else if ((oangle >= 1.4) || (oangle <= -1.2))
                 {
+                    if(letters)
                     textbox.Text = "T";
+                    else
+                        textbox.Text = "N/A";
                 }
                 else
                 {
